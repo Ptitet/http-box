@@ -1,0 +1,19 @@
+{
+  "name": "http-box",
+  "version": "1.0.0",
+  "description": "Tiny, lightweight http server with express-like routers and structure",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "keywords": [
+    "http"
+  ],
+  "author": "Ptitet",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3"
+  }
+}
