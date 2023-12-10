@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "npx tsc"
+    "build": "tsc"
   },
   "keywords": [
     "http"
