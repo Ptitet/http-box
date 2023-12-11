@@ -3,6 +3,7 @@ import { HTTPServerOptions, HTTPServerEvent } from '../types.js';
 import { Request } from './request.js';
 import { Response } from './response.js';
 import { Router } from './router.js';
+import { removeTrailingSlash } from '../utils.js';
 
 export class HTTPServer extends Router {
 
@@ -23,7 +24,7 @@ export class HTTPServer extends Router {
         this._httpServer.on(HTTPServerEvent.Request, (req, res) => {
             let request = new Request(req, this);
             let response = new Response(res);
-            let path = request.url.pathname;
+            let path = removeTrailingSlash(request.url.pathname);
             this._handle(path, request, response);
             if (!response.sent) {
                 response.end();
