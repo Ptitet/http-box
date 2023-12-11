@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "Tiny, lightweight http server with express-like routers and structure",
   "main": "dist/lib.js",
-  "files": ["dist"],
-  "repository": {"url": "https://github.com/Ptitet/http-box"},
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "url": "git+https://github.com/Ptitet/http-box.git"
+  },
   "type": "module",
+  "types": "dist/lib.d.ts",
   "scripts": {
     "build": "tsc"
   },
