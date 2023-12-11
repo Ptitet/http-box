@@ -4,7 +4,7 @@
   "description": "Tiny, lightweight http server with express-like routers and structure",
   "main": "dist/lib.js",
   "files": [
-    "dist/**/*"
+    "dist"
   ],
   "repository": {
     "url": "git+https://github.com/Ptitet/http-box.git"
