@@ -30,7 +30,7 @@ export class Request {
     }
 
     private _parseBody() {
-        if (this.headers['content-type'] = 'application/json') {
+        if (this.headers['content-type'] === 'application/json') {
             this.body = JSON.parse(this.body.toString());
         }
     }
