@@ -6,13 +6,13 @@ import { parseRequestMethod } from '../utils.js';
 export class Request {
 
     private _request: IncomingMessage;
-    private _bodyBuilt: boolean = false;
     body: string | Buffer = Buffer.from([]);
     headers: IncomingHttpHeaders;
     method: HTTPMethod;
     url: URL;
     params: { [key: string]: string; } = {};
     query: URLSearchParams;
+    data: any = {};
 
     constructor(request: IncomingMessage, httpServer: HTTPServer) {
         this._request = request;
@@ -20,6 +20,7 @@ export class Request {
         this.method = parseRequestMethod(request.method as string);
         this.url = new URL(request.url as string, `http://${httpServer.hostname}:${httpServer.port}`);
         this.query = this.url.searchParams;
+        this.buildBody();
     }
 
     private async _fetchBody() {
@@ -35,9 +36,7 @@ export class Request {
     }
 
     async buildBody() {
-        if (this._bodyBuilt) return;
         await this._fetchBody();
         this._parseBody();
-        this._bodyBuilt = true;
     }
 }

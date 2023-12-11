@@ -10,21 +10,24 @@ export class HTTPServer extends Router {
     hostname: string;
     port: number;
 
-    constructor(options: HTTPServerOptions) {
+    constructor(options?: HTTPServerOptions) {
         super();
-        this._httpServer = options.httpServer || new Server;
-        this.hostname = options.hostname || 'localhost';
-        this.port = options.port || 80;
+        this._httpServer = options?.httpServer || new Server;
+        this.hostname = options?.hostname || 'localhost';
+        this.port = options?.port || 80;
 
         this._setup();
     }
 
     private _setup() {
-        this._httpServer.on(HTTPServerEvent.Request, async (req, res) => {
+        this._httpServer.on(HTTPServerEvent.Request, (req, res) => {
             let request = new Request(req, this);
             let response = new Response(res);
             let path = request.url.pathname;
             this._handle(path, request, response);
+            if (!response.sent) {
+                response.end();
+            }
         });
     }
 

@@ -52,8 +52,10 @@ export class Response {
         this.code = code;
     }
 
-    end(data: string | Buffer) {
-        this.send(data);
+    end(data?: string | Buffer) {
+        if (data) {
+            this.send(data);
+        }
         this._response.end();
         this.sent = true;
     }
