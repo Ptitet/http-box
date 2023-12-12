@@ -21,8 +21,9 @@ export class HTTPServer extends Router {
     }
 
     private _setup() {
-        this._httpServer.on(HTTPServerEvent.Request, (req, res) => {
+        this._httpServer.on(HTTPServerEvent.Request, async (req, res) => {
             let request = new Request(req, this);
+            await request.buildBody();
             let response = new Response(res);
             let path = removeTrailingSlash(request.url.pathname);
             this._handle(path, request, response);
