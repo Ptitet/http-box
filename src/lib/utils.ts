@@ -41,10 +41,10 @@ export function wrapHandlerFunction(method: HTTPMethod, path: string, handlerFun
     }
 }
 
-function matchPart(handlerPart: string, requestPart: string): boolean {
+function matchPart(handlerPart: string, requestPart?: string): boolean {
     let isHandlerPartAny = handlerPart === '*';
     let isHandlerPartParameter = !!handlerPart.match(/:\w+/);
-    let doesPartMatches = handlerPart.toLowerCase() === requestPart.toLowerCase();
+    let doesPartMatches = handlerPart.toLowerCase() === requestPart?.toLowerCase();
     return isHandlerPartAny || isHandlerPartParameter || doesPartMatches;
 }
 
