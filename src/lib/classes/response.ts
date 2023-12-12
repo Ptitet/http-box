@@ -1,6 +1,6 @@
 import { ServerResponse } from 'node:http';
-import { Headers, ContentType } from '../types.js';
-import { getContentType } from '../utils.js';
+import { Headers, ContentType, CookieAttributes, Cookie } from '../types.js';
+import { getContentType, getCookieHeaderValue } from '../utils.js';
 
 export class Response {
 
@@ -10,6 +10,7 @@ export class Response {
     sent: boolean = false;
     contentType: ContentType | null = null;
     code: number = 200;
+    cookies: {[key: string]: Cookie} = {};
 
     constructor(response: ServerResponse) {
         this._response = response;
@@ -20,7 +21,17 @@ export class Response {
         this.setHeader('Content-Type', this.contentType);
     }
 
+    private _prepareCookies() {
+        let headers: string[] = [];
+        for (let cookieName of Object.keys(this.cookies)) {
+            let cookieHeaderValue = getCookieHeaderValue(cookieName, this.cookies[cookieName]);
+            headers.push(cookieHeaderValue);
+        }
+        this._response.setHeader('Set-Cookie', headers);
+    }
+
     private _writeHead() {
+        this._prepareCookies();
         this._response.writeHead(this.code, this.headers);
         this.headSent = true;
     }
@@ -44,6 +55,16 @@ export class Response {
         if (this.sent) throw new Error('Response already sent');
         if (this.headSent) throw new Error('Response head already sent');
         this.headers[name] = value;
+    }
+
+    setCookie(name: string, value: string, attributes: CookieAttributes = {}) {
+        if (this.sent) throw new Error('Response already sent');
+        if (this.headSent) throw new Error('Response head already sent');
+        let cookie: Cookie = {
+            value,
+            attributes
+        }
+        this.cookies[name] = cookie;
     }
 
     status(code: number) {

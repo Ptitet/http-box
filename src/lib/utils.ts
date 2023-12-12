@@ -1,4 +1,4 @@
-import { ContentType, HTTPMethod, HandlerFunction, HandlerType, RequestStatus, Route } from './types.js';
+import { ContentType, Cookie, HTTPMethod, HandlerFunction, HandlerType, RequestStatus, Route } from './types.js';
 
 export function isJSON(data: string): boolean {
     let parsed;
@@ -97,4 +97,24 @@ export function parseCookieHeader(cookieHeader: string) {
         cookies[name] = value;
     }
     return cookies;
+}
+
+function isBoolean(value: any): value is boolean {
+    return [true, false].includes(value);
+}
+
+const cookieAttributesMatches: {[key: string]: string} = {
+    secure: 'Secure',
+    maxAge: 'Max-Age',
+    httpOnly: 'Http-Only'
+}
+
+export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
+    let headerValue = `${cookieName}=${cookie.value}`;
+    for (let attributeName of Object.keys(cookie.attributes)) {
+        let attribute = cookie.attributes[attributeName] as boolean | string;
+        if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}`;
+        else headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
+    }
+    return headerValue;
 }
