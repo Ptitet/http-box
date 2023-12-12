@@ -1,7 +1,7 @@
 import { IncomingMessage, IncomingHttpHeaders } from 'node:http';
 import { HTTPServer } from './httpServer.js';
 import { HTTPMethod } from '../types.js';
-import { parseRequestMethod } from '../utils.js';
+import { parseCookieHeader, parseRequestMethod } from '../utils.js';
 
 export class Request {
 
@@ -14,6 +14,7 @@ export class Request {
     params: { [key: string]: string; } = {};
     query: URLSearchParams;
     data: any = {};
+    cookies: { [key: string]: string };
 
     constructor(request: IncomingMessage, httpServer: HTTPServer) {
         this._request = request;
@@ -21,6 +22,8 @@ export class Request {
         this.method = parseRequestMethod(request.method as string);
         this.url = new URL(request.url as string, `http://${httpServer.hostname}:${httpServer.port}`);
         this.query = this.url.searchParams;
+        if (request.headers.cookie) this.cookies = parseCookieHeader(request.headers.cookie);
+        else this.cookies = {};
     }
 
     private async _fetchBody() {

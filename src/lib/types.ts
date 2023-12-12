@@ -59,3 +59,15 @@ export enum HTTPServerEvent {
     Request = 'request',
     Upgrade = 'upgrade'
 }
+
+export type CookieAttributes = {
+    [key: string]: number | boolean | undefined,
+    secure?: boolean,
+    maxAge?: number,
+    httpOnly?: boolean
+}
+
+export type Cookie = {
+    value: string,
+    attributes: CookieAttributes
+}
