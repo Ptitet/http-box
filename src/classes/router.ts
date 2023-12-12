@@ -1,7 +1,7 @@
 import { Response } from './response.js';
 import { Request } from './request.js';
 import { Route, HandlerType, HTTPMethod, RequestStatus, HandlerFunction } from '../types.js';
-import { matchPaths, cleanPath, populateRequestParams, wrapHandlerFunction } from '../utils.js';
+import { matchPaths, cleanPath, populateRequestParams, wrapHandlerFunction, isReturnValueRequestStatus as isRequestStatus } from '../utils.js';
 
 export class Router {
 
@@ -33,6 +33,7 @@ export class Router {
             for (let routeFunction of routeFunctions) {
                 request.params = populateRequestParams(currentPath, routeFunction.path);
                 let status = routeFunction._handle(request, response);
+                if (!isRequestStatus(status)) throw new Error(`Handler function must return a RequestStatus, received ${typeof status}`);
                 if (status !== RequestStatus.Next) return status;
             }
             let lastRouteFunctionDone = routeFunctions[routeFunctions.length - 1];

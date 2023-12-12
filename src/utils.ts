@@ -1,4 +1,4 @@
-import { ContentType, HTTPMethod, HandlerFunction, HandlerType, Route } from './types.js';
+import { ContentType, HTTPMethod, HandlerFunction, HandlerType, RequestStatus, Route } from './types.js';
 
 export function isJSON(data: string): boolean {
     let parsed;
@@ -83,4 +83,8 @@ export function populateRequestParams(currentPath: string, routePath: string): {
         }
     }
     return params;
+}
+
+export function isReturnValueRequestStatus(value: any): value is RequestStatus {
+    return Object.values(RequestStatus).includes(value);
 }
