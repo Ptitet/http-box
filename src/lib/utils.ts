@@ -88,3 +88,13 @@ export function populateRequestParams(currentPath: string, routePath: string): {
 export function isReturnValueRequestStatus(value: any): value is RequestStatus {
     return Object.values(RequestStatus).includes(value);
 }
+
+export function parseCookieHeader(cookieHeader: string) {
+    let cookiePairs = cookieHeader.split('; ');
+    let cookies: {[key: string]: string} = {};
+    for (let cookie of cookiePairs) {
+        let [name, value] = cookie.split('=');
+        cookies[name] = value;
+    }
+    return cookies;
+}
