@@ -85,6 +85,6 @@ export function populateRequestParams(currentPath: string, routePath: string): {
     return params;
 }
 
-export function isReturnValueRequestStatus(value: any): value is RequestStatus {
+export function isRequestStatus(value: any): value is RequestStatus {
     return Object.values(RequestStatus).includes(value);
 }

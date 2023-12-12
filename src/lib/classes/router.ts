@@ -1,7 +1,7 @@
 import { Response } from './response.js';
 import { Request } from './request.js';
 import { Route, HandlerType, HTTPMethod, RequestStatus, HandlerFunction } from '../types.js';
-import { matchPaths, cleanPath, populateRequestParams, wrapHandlerFunction, isReturnValueRequestStatus as isRequestStatus } from '../utils.js';
+import { matchPaths, cleanPath, populateRequestParams, wrapHandlerFunction, isRequestStatus as isRequestStatus } from '../utils.js';
 
 export class Router {
 
