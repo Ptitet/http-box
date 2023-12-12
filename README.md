@@ -1,2 +1,2 @@
 # HTTP-box
-HTTP-box est une librairie Javascript pour Node.js très légère, grandement inspiré de [Express](expressjs.com) et de son système de routeurs.
+HTTP-box is a lightweight http Node.js JavaScript library, inspired from [Express.js](expressjs.com) ans its router system.
