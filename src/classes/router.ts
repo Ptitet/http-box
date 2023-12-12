@@ -12,7 +12,6 @@ export class Router {
     method: HTTPMethod = HTTPMethod.Any;
 
     protected _handle(currentPath: string, request: Request, response: Response): RequestStatus {
-        // TODO multiples routes possible qui s'enchaînent sur un même niveau
         let routeFunctions = this.routes.filter(route => {
             let doesPathsMatch = matchPaths(currentPath, route.path);
             let doesMethodsMatch = route.method === request.method || route.method === HTTPMethod.Any;
