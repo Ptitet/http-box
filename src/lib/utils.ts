@@ -66,7 +66,7 @@ export function cleanPath(routePath: string, currentPath: string): string {
     splitCurrentPath.shift();
     let cleanedPath = splitCurrentPath.slice(splitRoutePath.length);
     cleanedPath.unshift('');
-    return cleanedPath.join('/');
+    return cleanedPath.join('/') || '/';
 }
 
 export function populateRequestParams(currentPath: string, routePath: string): {[key: string]: string} {
