@@ -137,4 +137,20 @@ describe('test of the utils functions', t => {
             assert.deepStrictEqual(utils.parseCookieHeader(cookieHeader), expected);
         });
     });
+
+    describe('getCookieHeaderValue', () => {
+        it('turn a cookie object into Set-Cookie header value', () => {
+            let cookieName = 'token';
+            let cookie = {
+                value: 's3Cr€TvA1uE',
+                attributes: {
+                    secure: true,
+                    httpOnly: true,
+                    maxAge: 10000
+                }
+            }
+            let expected = 'token=s3Cr€TvA1uE; Secure; Http-Only; Max-Age=10000';
+            assert.equal(utils.getCookieHeaderValue(cookieName, cookie), expected);
+        });
+    });
 });
