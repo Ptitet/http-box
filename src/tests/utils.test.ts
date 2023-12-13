@@ -126,4 +126,15 @@ describe('test of the utils functions', t => {
             assert.deepStrictEqual(utils.populateRequestParams(currentPath, routePath), expected);
         });
     });
+
+    describe('parseCookieHeader', () => {
+        it('should parse the cookie header', () => {
+            let cookieHeader = 'name=value; token=12345';
+            let expected = {
+                name: 'value',
+                token: '12345'
+            }
+            assert.deepStrictEqual(utils.parseCookieHeader(cookieHeader), expected);
+        });
+    });
 });
