@@ -8,9 +8,27 @@ describe('test of the utils functions', t => {
             let validJSON = JSON.stringify({ object: { with: ['nested', { properties: true }] }, and: { numbers: 10 } });
             assert.ok(utils.isJSON(validJSON));
         });
+
         it('sould return false for other strings', () => {
             let notValidJSON = 'not json';
             assert.ok(!utils.isJSON(notValidJSON));
+        });
+    });
+
+    describe('removeTrailingSlash', () => {
+        it('sould return / when path is /', () => {
+           let path = utils.removeTrailingSlash('/');
+           assert.equal(path, '/'); 
+        });
+
+        it('should return the same path if it doesnt end with /', () => {
+            let path = utils.removeTrailingSlash('/a/b');
+            assert.equal(path, '/a/b');
+        });
+
+        it('should return the path whitout end / otherwise', () => {
+            let path = utils.removeTrailingSlash('/a/b/');
+            assert.equal(path, '/a/b');
         });
     });
 });
