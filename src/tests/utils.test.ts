@@ -108,4 +108,22 @@ describe('test of the utils functions', t => {
             assert.strictEqual(utils.cleanPath(handlerPath, currentPath), '/');
         });
     });
+
+    describe('populateRequestParams', () => {
+        it('should return an empty object if no params', () => {
+            let currentPath = '/home/infos';
+            let routePath = '/home/infos';
+            assert.deepStrictEqual(utils.populateRequestParams(currentPath, routePath), {});
+        });
+
+        it('should return corresponding params', () => {
+            let currentPath = '/api/users/john/pictures/1234';
+            let routePath = '/api/users/:username/pictures/:picId';
+            let expected = {
+                username: 'john',
+                picId: '1234'
+            }
+            assert.deepStrictEqual(utils.populateRequestParams(currentPath, routePath), expected);
+        });
+    });
 });
