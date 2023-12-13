@@ -19,29 +19,29 @@ describe('test of the utils functions', t => {
     describe('removeTrailingSlash', () => {
         it('sould return / when path is /', () => {
            let path = utils.removeTrailingSlash('/');
-           assert.equal(path, '/'); 
+           assert.strictEqual(path, '/'); 
         });
 
         it('should return the same path if it doesnt end with /', () => {
             let path = utils.removeTrailingSlash('/a/b');
-            assert.equal(path, '/a/b');
+            assert.strictEqual(path, '/a/b');
         });
 
         it('should return the path whitout end / otherwise', () => {
             let path = utils.removeTrailingSlash('/a/b/');
-            assert.equal(path, '/a/b');
+            assert.strictEqual(path, '/a/b');
         });
     });
 
     describe('parseRequestMethod', () => {
         it('should return GET, POST, PATCH or DELETE', () => {
             for (let method of ['GET', 'POST', 'PATCH', 'DELETE']) {
-                assert.equal(method, utils.parseRequestMethod(method));
+                assert.strictEqual(method, utils.parseRequestMethod(method));
             }
         });
 
         it('should return ANY for other values', () => {
-           assert.equal('ANY', utils.parseRequestMethod('not an http method')); 
+           assert.strictEqual('ANY', utils.parseRequestMethod('not an http method')); 
         });
     });
 
