@@ -13,7 +13,7 @@
   "types": "dist/lib/lib.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "node --test"
+    "test": "pnpm run build && node --test"
   },
   "keywords": [
     "http"
