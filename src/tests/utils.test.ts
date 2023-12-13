@@ -93,4 +93,19 @@ describe('test of the utils functions', t => {
             assert.ok(utils.matchPaths(requestPath, handlerPath));
         });
     });
+
+    describe('cleanPath', () => {
+        it('should clean the current path', () => {
+            let currentPath = '/app/users/8887463/profile';
+            let handlerPath = '/app';
+            let cleanedPath = '/users/8887463/profile';
+            assert.strictEqual(utils.cleanPath(handlerPath, currentPath), cleanedPath);
+        });
+
+        it('should return / if the paths are equal', () => {
+            let currentPath = '/home';
+            let handlerPath = '/home';
+            assert.strictEqual(utils.cleanPath(handlerPath, currentPath), '/');
+        });
+    });
 });
