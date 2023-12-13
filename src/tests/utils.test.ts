@@ -61,4 +61,36 @@ describe('test of the utils functions', t => {
             assert.strictEqual(ContentType.Text, utils.getContentType(str));
         });
     });
+
+    describe('matchPaths', () => {
+        it('should match normal paths', () => {
+            let handlerPath = '/api';
+            let requestPath = '/api/users';
+            assert.ok(utils.matchPaths(requestPath, handlerPath));
+        });
+
+        it('should match multiple depth', () => {
+            let handlerPath = '/app/easter-egg';
+            let requestPath = '/app/easter-egg';
+            assert.ok(utils.matchPaths(requestPath, handlerPath));
+        });
+
+        it('should not match if handler path is longer', () => {
+            let handlerPath = '/things/random';
+            let requestPath = '/things';
+            assert.ok(!utils.matchPaths(requestPath, handlerPath));
+        });
+
+        it('should match if handler path is *', () => {
+            let handlerPath = '/app/*';
+            let requestPath = '/app/lolipop';
+            assert.ok(utils.matchPaths(requestPath, handlerPath));
+        });
+
+        it('should match with path params', () => {
+            let handlerPath = '/users/:id/profile';
+            let requestPath = '/users/092834/profile';
+            assert.ok(utils.matchPaths(requestPath, handlerPath));
+        });
+    });
 });
