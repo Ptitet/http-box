@@ -5,6 +5,7 @@ import { getContentType } from '../utils.js';
 export class Response {
 
     private _response: ServerResponse;
+    checkContentType: boolean = true;
     headers: Headers = {};
     headSent: boolean = false;
     sent: boolean = false;
@@ -29,14 +30,20 @@ export class Response {
         this._response.write(data);
     }
 
+    setContentTypeCheck(value: boolean) {
+        this.checkContentType = value;
+    }
+
     send(data: string | Buffer) {
         if (this.sent) throw new Error('Response already sent');
         if (!this.headSent) {
             this._setContentType(data);
             this._writeHead();
         }
-        let dataType = getContentType(data);
-        if (dataType !== this.contentType) throw new Error(`Invalid data type : ${dataType} is not ${this.contentType}`);
+        if (this.checkContentType) {
+            let dataType = getContentType(data);
+            if (dataType !== this.contentType) throw new Error(`Invalid data type : ${dataType} is not ${this.contentType}`);
+        }
         this._write(data);
     }
 
