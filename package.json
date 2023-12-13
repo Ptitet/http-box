@@ -12,7 +12,8 @@
   "type": "module",
   "types": "dist/lib/lib.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "node --test"
   },
   "keywords": [
     "http"
