@@ -31,4 +31,16 @@ describe('test of the utils functions', t => {
             assert.equal(path, '/a/b');
         });
     });
+
+    describe('parseRequestMethod', () => {
+        it('should return GET, POST, PATCH or DELETE', () => {
+            for (let method of ['GET', 'POST', 'PATCH', 'DELETE']) {
+                assert.equal(method, utils.parseRequestMethod(method));
+            }
+        });
+
+        it('should return ANY for other values', () => {
+           assert.equal('ANY', utils.parseRequestMethod('not an http method')); 
+        });
+    });
 });
