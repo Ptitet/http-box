@@ -3,9 +3,9 @@ import * as utils from '../lib/utils.js';
 import assert from 'node:assert';
 import { ContentType } from '../lib/types.js';
 
-describe('test of the utils functions', t => {
+describe('test of the utils functions', () => {
     describe('isJSON', () => {
-        it('return true for valid JSON string', t => {
+        it('return true for valid JSON string', () => {
             let validJSON = JSON.stringify({ object: { with: ['nested', { properties: true }] }, and: { numbers: 10 } });
             assert.ok(utils.isJSON(validJSON));
         });
