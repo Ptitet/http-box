@@ -8,13 +8,11 @@ import { removeTrailingSlash } from '../utils.js';
 export class HTTPServer extends Router {
 
     private _httpServer: Server;
-    hostname: string;
     port: number;
 
     constructor(options?: HTTPServerOptions) {
         super();
         this._httpServer = options?.httpServer || new Server;
-        this.hostname = options?.hostname || 'localhost';
         this.port = options?.port || 80;
 
         this._setup();
@@ -38,6 +36,6 @@ export class HTTPServer extends Router {
     }
 
     start(listeningCallback: () => void) {
-        this._httpServer.listen(this.port, this.hostname, listeningCallback);
+        this._httpServer.listen(this.port, listeningCallback);
     }
 }

@@ -42,8 +42,7 @@ export enum HandlerType {
 
 export type HTTPServerOptions = {
     httpServer?: Server,
-    port?: number,
-    hostname?: string
+    port?: number
 }
 
 export enum HTTPServerEvent {
