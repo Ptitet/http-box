@@ -27,6 +27,12 @@ await describe('test of the http server', async () => {
             return RequestStatus.Done;
         });
 
+        server.get('/givemecookies', (req, res) => {
+            res.setCookie('cookie', 'value', { secure: true, maxAge: 666 });
+            res.send('content');
+            return RequestStatus.Done;
+        });
+
         server.use('/router', router);
 
         server.post('/echo', (req, res) => {
@@ -54,6 +60,17 @@ await describe('test of the http server', async () => {
         let res = await fetch(`${rootUrl}/router/params/${paramValue1}/${paramValue2}`, { method: 'GET' });
         let resBody = await res.text();
         assert.strictEqual(paramValue1 + paramValue2, resBody);
+    });
+
+    await it('cookies', async () => {
+        let res = await fetch(`${rootUrl}/givemecookies`);
+        let [name, value] = res.headers.getSetCookie()[0].split('=');
+        let [cookieValue, ...attributes] = value.split('; ');
+        console.log(attributes);
+        assert.strictEqual(name, 'cookie');
+        assert.strictEqual(cookieValue, 'value');
+        assert.ok(attributes.includes('Secure'));
+        assert.ok(attributes.includes('Max-Age=666'));
     });
 
     after(() => {
