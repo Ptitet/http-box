@@ -106,7 +106,7 @@ function isBoolean(value: any): value is boolean {
 const cookieAttributesMatches: {[key: string]: string} = {
     secure: 'Secure',
     maxAge: 'Max-Age',
-    httpOnly: 'Http-Only'
+    httpOnly: 'HttpOnly'
 }
 
 export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
@@ -114,7 +114,7 @@ export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string
     for (let attributeName of Object.keys(cookie.attributes)) {
         let attribute = cookie.attributes[attributeName] as boolean | string;
         if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}`;
-        else headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
+        else if (attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
     }
     return headerValue;
 }
