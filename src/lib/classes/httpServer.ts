@@ -38,4 +38,8 @@ export class HTTPServer extends Router {
     start(listeningCallback: () => void) {
         this._httpServer.listen(this.port, listeningCallback);
     }
+
+    close() {
+        this._httpServer.close();
+    }
 }
