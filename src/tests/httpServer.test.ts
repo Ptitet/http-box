@@ -64,8 +64,8 @@ await describe('test of the http server', async () => {
 
     await it('cookies', async () => {
         let res = await fetch(`${rootUrl}/givemecookies`);
-        let [name, value] = res.headers.getSetCookie()[0].split('=');
-        let [cookieValue, ...attributes] = value.split('; ');
+        let [name, ...value] = res.headers.getSetCookie()[0].split('=');
+        let [cookieValue, ...attributes] = value.join('=').split('; ');
         console.log(attributes);
         assert.strictEqual(name, 'cookie');
         assert.strictEqual(cookieValue, 'value');
