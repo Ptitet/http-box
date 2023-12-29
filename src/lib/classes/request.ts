@@ -20,7 +20,7 @@ export class Request {
         this._request = request;
         this.headers = request.headers;
         this.method = parseRequestMethod(request.method as string);
-        this.url = new URL(request.url as string, `http://${httpServer.hostname}:${httpServer.port}`);
+        this.url = new URL(request.url as string, `http://localhost:${httpServer.port}`); // ? use localhost as hostname or something else ?
         this.query = this.url.searchParams;
         if (request.headers.cookie) this.cookies = parseCookieHeader(request.headers.cookie);
         else this.cookies = {};
