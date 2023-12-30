@@ -25,7 +25,7 @@
 The port on which the server is listening.
 
 ### Other properties
-The `HTTPServer` class extends the [`Router`](#router) class, please see [router properties](#properties-2) for the inherited properties.
+The `HTTPServer` class extends the [`Router`](#router) class, please see [router properties](#properties-1) for the inherited properties.
 
 ## Methods
 - [`new HTTPServer()`](#new-httpserveroptions---httpserver)
@@ -233,13 +233,13 @@ The cookies sent with the request.
 - [`<Response>.sent`](#responsesent---boolean)
 - [`<Response>.contentType`](#responsecontenttype---contenttype)
 - [`<Response>.code`](#responsecode---number)
-- [`<Response>.cookies`](#responsecookies----key-string-cookie)
+- [`<Response>.cookies`](#responsecookies----name-string-cookie)
 
 ### \<Response>.checkContentType -> boolean
 Whether or not the content-type checking when sending data is enabled. Use [`<Response>.setContentTypeCheck()`](#responsesetcontenttypecheckvalue---void) to modify this value.
 
 ### \<Response>.headers -> OutgoingHttpHeaders
-The currently set headers for this reponse. The `Set-Cookie` headers are not included. To view the cookies, see [`<Response>.cookies`](#responsecookies----key-string-cookie).
+The currently set headers for this reponse. The `Set-Cookie` headers are not included. To view the cookies, see [`<Response>.cookies`](#responsecookies----name-string-cookie).
 
 ### \<Response>.headSent -> boolean
 Whether or not the head of the response has been sent. If true, the headers and the status code cannot be changed.
@@ -370,7 +370,7 @@ The two possible types of handler.
 | `HandlerType.RouterFunction` | Used for [`Route`](#route) |
 
 # HTTPServerOptions
-The options passed to [`new HTTPServer()`](#new-httpserverhttpserveroptions---httpserver).
+The options passed to [`new HTTPServer()`](#new-httpserveroptions---httpserver).
 
 | Value | Type | Description |
 | ----- | ---- | ----------- |
