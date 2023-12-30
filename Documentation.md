@@ -37,8 +37,9 @@ The `HTTPServer` class extends the [`Router`](#router) class, please see [router
 ### new HTTPServer(options) -> HTTPServer
 Creates a new HTTP server.
 
-#### Parameters
-- `options` : ?[`HTTPServerOptions`](#httpserveroptions) -> the options for the server
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `options` | ?[`HTTPServerOptions`](#httpserveroptions) | The options for the server |
 
 #### Example
 ```js
@@ -49,19 +50,21 @@ const server = new HTTPServer({ port });
 ### \<HTTPServer>.on(event, callback) -> void
 Adds an event listener on the server.
 
-#### Parameters
-- `event` : [`HTTPServerEvent`](#httpserverevent) -> the event to listen for
-- `callback` : function -> the listener for the event
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+|`event`| [`HTTPServerEvent`](#httpserverevent) | The event to listen for
+| `callback` | function | The listener for the event
 
-#### Notes :
-- don't add listeners for `HTTPServerEvent.Request` as this event already handled internally
-- don't add listeners for `HTTPServerEvent.Listening`, instead use the callback of [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void)
+> **Notes** <br>
+> Don't add listeners for `HTTPServerEvent.Request` as this event is already handled internally. <br>
+> Don't add listeners for `HTTPServerEvent.Listening`, instead use the callback of [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void).
 
 ### \<HTTPServer>.start(listeningCallback) -> void
 Starts the server on the port specified in the server options (see [`<HTTPServer>.port`](#httpserverport---number)).
 
-#### Parameters
-- `listeningCallback` : function -> triggered when the server is ready
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `listeningCallback` | function | Triggered when the server is ready |
 
 #### Examples
 ```js
@@ -114,33 +117,43 @@ Creates a new router.
 
 ### \<Router>.get(path, handler) -> void
 Adds a new handler for `GET` requests.
-#### Parameters
-- `path` : string -> The path where to add the handler
-- `handler` : [`HandlerFunction`](#handlerfunction) -> The handler to add
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `path` | string | The path where to add the handler |
+| `handler` | [`HandlerFunction`](#handlerfunction) | The handler to add |
 
 ### \<Router>.post(path, handler) -> void
 Adds a new handler for `POST` requests.
-#### Parameters
-- `path` : string -> The path where to add the handler
-- `handler` : [`HandlerFunction`](#handlerfunction) -> The handler to add
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `path` | string | The path where to add the handler |
+| `handler` | [`HandlerFunction`](#handlerfunction) | The handler to add |
 
 ### \<Router>.patch(path, handler) -> void
 Adds a new handler for `PATCH` requests.
-#### Parameters
-- `path` : string -> The path where to add the handler
-- `handler` : [`HandlerFunction`](#handlerfunction) -> The handler to add
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `path` | string | The path where to add the handler |
+| `handler` | [`HandlerFunction`](#handlerfunction) | The handler to add |
 
 ### \<Router>.delete(path, handler) -> void
 Adds a new handler for `DELETE` requests.
-#### Parameters
-- `path` : string -> The path where to add the handler
-- `handler` : [`HandlerFunction`](#handlerfunction) -> The handler to add
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `path` | string | The path where to add the handler |
+| `handler` | [`HandlerFunction`](#handlerfunction) | The handler to add |
 
 ### \<Router>.use(path, handler) -> void
 Adds a new handler for any request method.
-#### Parameters
-- `path` : string -> The path where to add the handler
-- `handler` : [`HandlerFunction`](#handlerfunction) | [`Router`](#router) -> The handler to add
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `path` | string | The path where to add the handler |
+| `handler` | [`HandlerFunction`](#handlerfunction) \| [`Router`](#router) | The handler to add |
 
 # Request
 
@@ -215,7 +228,7 @@ The cookies sent with the request.
 
 ## Properties
 - [`<Response>.checkContentType`](#responsecheckcontenttype---boolean)
-- [`<Response>.headers`](#responseheaders---headers)
+- [`<Response>.headers`](#responseheaders---outgoinghttpheaders)
 - [`<Response>.headSent`](#responseheadsent---boolean)
 - [`<Response>.sent`](#responsesent---boolean)
 - [`<Response>.contentType`](#responsecontenttype---contenttype)
@@ -226,7 +239,7 @@ The cookies sent with the request.
 Whether or not the content-type checking when sending data is enabled. Use [`<Response>.setContentTypeCheck()`](#responsesetcontenttypecheckvalue---void) to modify this value.
 
 ### \<Response>.headers -> OutgoingHttpHeaders
-The currently set headers for this reponse. The `Set-Cookie` headers are not included. To see the cookies, see [`<Response>.cookies`](#responsecookies----key-string-cookie).
+The currently set headers for this reponse. The `Set-Cookie` headers are not included. To view the cookies, see [`<Response>.cookies`](#responsecookies----key-string-cookie).
 
 ### \<Response>.headSent -> boolean
 Whether or not the head of the response has been sent. If true, the headers and the status code cannot be changed.
@@ -234,7 +247,7 @@ Whether or not the head of the response has been sent. If true, the headers and 
 ### \<Response>.sent -> boolean
 Whether or not the body of the response has been sent. See [`<Response>.end()`](#responseenddata---void) for more details.
 
-### \<Response>.contentType -> ContentType
+### \<Response>.contentType -> ?ContentType
 The content-type of the response's body. If no data has been send yet, the value is `null`. See [`ContentType`](#contenttype) for more details.
 
 ### \<Response>.code -> number
@@ -254,125 +267,140 @@ The cookies that have been set on this response. See [`<Response>.setCookie()`](
 ### \<Response>.setContentTypeCheck(value) -> void
 Enable or disable the content-type checking.
 
-#### Parameters
-- `value` : boolean -> the new state of the content-type checking
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `value` | boolean | The new state of the content-type checking |
 
 ### \<Response>.send(data) -> void
 Send some data.
 
-#### Parameters
-- `data` : string | Buffer -> the data to send
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `data` | string \| Buffer | The data to send |
 
 ### \<Response>.setHeader(name, value) -> void
 Set or modify a header. Do not use this to set cookies, as the last set cookie will overwrite all the other previously set. To set cookies, use [`<Response>.setCookie()`](#responsesetcookiename-value-attributes---void).
 
-#### Parameters
-- `name` : string -> the name of the header to set
-- `value` : string -> the value of the header
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `name` | string | The name of the header to set |
+| `value` | string | The value of the header |
 
 ### \<Response>.setCookie(name, value, attributes) -> void
 Set a cookie on the response.
 
-#### Parameters
-- `name` : string -> the cookie's name
-- `value` : string -> the cookie's value
-- `attributes` : ?[`CookieAttributes`](#cookieattributes) -> the cookie's attributes
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `name` | string | The cookie's name |
+| `value` | string | The cookie's value |
+| `attributes` | ?[`CookieAttributes`](#cookieattributes) | The cookie's attributes |
 
 ### \<Response>.status(code) -> void
 Set the status code of the response. See [`<Response>.code`](#responsecode---number) for more details.
 
-#### Parameters
-- `code` : number -> the new status code
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `code` | number | The new status code |
 
 ### \<Response>.end(data) -> void
 End the response. Optionally send data, then set [`<Response>.sent`](#responsesent---boolean) to `true`.
 
-#### Parameters
-- `data`: ?(string | Buffer) -> the data to send before ending the response
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `data` | ?(string \| Buffer) | The data to send before ending the response |
 
 # RequestStatus
 The possible status for a request in the handling process, returned by the [handler functions](#handlerfunction).
 
-### Values
-- `RequestStatus.Done` -> the request has been handled and the response is sent
-- `RequestStatus.Next` -> the handler has finished his job and passes the request to the next handler
-- `RequestStatus.Error` -> an error occured during the handling process
+| Value | Description |
+| ----- | ----------- |
+| `RequestStatus.Done` | The request has been handled and the response is sent |
+| `RequestStatus.Next` | The handler has finished his job and passes the request to the next handler |
+| `RequestStatus.Error` | An error occured during the handling process |
 
 # HTTPServerEvent
 The different events that the server can encounter. See [`<HTTPServer>.on()`](#httpserveronevent-callback---void).
 
 See the [Node.js documentation](https://nodejs.org/docs/latest/api/http.html#class-httpserver) for more details about each event.
 
-#### Notes :
-- don't add listeners for `HTTPServerEvent.Request` as this event already handled internally
-- don't add listeners for `HTTPServerEvent.Listening`, instead use the callback of [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void)
+| Value | Description |
+| ----- | ----------- |
+| `HTTPServerEvent.CheckContinue` | - |
+| `HTTPServerEvent.CheckExpectation` | - |
+| `HTTPServerEvent.ClientError` | - |
+| `HTTPServerEvent.Close` | - |
+| `HTTPServerEvent.Connect` | - |
+| `HTTPServerEvent.Connection` | - |
+| `HTTPServerEvent.DropRequest` | - |
+| `HTTPServerEvent.Error` | - |
+| `HTTPServerEvent.Listening` | - |
+| `HTTPServerEvent.Request` | - |
+| `HTTPServerEvent.Upgrade` | - |
 
-### Values
-- `HTTPServerEvent.CheckContinue`
-- `HTTPServerEvent.CheckExpectation`
-- `HTTPServerEvent.ClientError`
-- `HTTPServerEvent.Close`
-- `HTTPServerEvent.Connect`
-- `HTTPServerEvent.Connection`
-- `HTTPServerEvent.DropRequest`
-- `HTTPServerEvent.Error`
-- `HTTPServerEvent.Listening`
-- `HTTPServerEvent.Request`
-- `HTTPServerEvent.Upgrade`
+> **Notes** <br>
+> Don't add listeners for `HTTPServerEvent.Request` as this event is already handled internally. <br>
+> Don't add listeners for `HTTPServerEvent.Listening`, instead use the callback of [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void).
 
 # HTTPMethod
 The different http methods handled.
 
-### Values
-- `HTTPMethod.Get`
-- `HTTPMethod.Post`
-- `HTTPMethod.Patch`
-- `HTTPMethod.Delete`
-- `HTTPMethod.Any` -> used when [`<Router>.use()`](#routerusepath-handler---void) is called
+| Value | Description |
+| ----- | ----------- |
+| `HTTPMethod.Get` | - |
+| `HTTPMethod.Post` | - |
+| `HTTPMethod.Patch` | - |
+| `HTTPMethod.Delete` | - |
+| `HTTPMethod.Any` | Special value used when [`<Router>.use()`](#routerusepath-handler---void) is called |
 
 # ContentType
 The different content-types.
 
-### Values
-- `ContentType.Text` -> used for textual content (i.e. html)
-- `ContentType.JSON` -> used for JSON body
-- `ContentType.OctetStream` -> used for all other data types
+| Value | Description |
+| ----- | ----------- |
+| `ContentType.Text` | Used for textual content (i.e. html) |
+| `ContentType.JSON` | Used for JSON body |
+| `ContentType.OctetStream` | Used for all other data types |
 
 # HandlerType
 The two possible types of handler.
 
-### Values
-- `HandlerType.Router` -> used for [`Router`](#router)
-- `HandlerType.RouterFunction` used for [`Route`](#route)
+| Value | Description |
+| ----- | ----------- |
+| `HandlerType.Router` | Used for [`Router`](#router) |
+| `HandlerType.RouterFunction` | Used for [`Route`](#route) |
 
 # HTTPServerOptions
 The options passed to [`new HTTPServer()`](#new-httpserverhttpserveroptions---httpserver).
 
-### Values
-- `HTTPServerOptions.httpServer` : ?[Server](https://nodejs.org/docs/latest/api/http.html#class-httpserver) -> a preexisting server object (from `node:http`)
-- `HTTPServerOptions.port` : ?number -> the port on which the server listens (see [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void))
+| Value | Type | Description |
+| ----- | ---- | ----------- |
+| `HTTPServerOptions.httpServer` | ?[Server](https://nodejs.org/docs/latest/api/http.html#class-httpserver) | A preexisting server object (from `node:http`) |
+| `HTTPServerOptions.port` | ?number | The port on which the server listens (see [`<HTTPServer>.start()`](#httpserverstartlisteningcallback---void)) |
 
 # Cookie
 Represents a cookie value and attributes. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie for more details.
 
-### Values
-- `Cookie.value` : string -> the value of the cookie
-- `Cookie.attributes` : ?[`CookieAttributes`](#cookieattributes) -> the attributes of the cookie
+| Value | Type | Description |
+| ----- | ---- | ----------- |
+| `Cookie.value` | string | The value of the cookie |
+| `Cookie.attributes` | ?[`CookieAttributes`](#cookieattributes) | The attributes of the cookie |
 
 # CookieAttributes
 Represents the attributes of a cookie. See https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#attributes for more details.
 
-### Values
-- `CookieAttributes.secure` : ?boolean
-- `CookieAttributes.maxAge` : ?number
-- `CookieAttributes.httpOnly` : ?boolean
+| Value | Type | Description |
+| ----- | ---- | ----------- |
+| `CookieAttributes.secure` | ?boolean | - |
+| `CookieAttributes.maxAge` | ?number | - |
+| `CookieAttributes.httpOnly` | ?boolean | - |
 
 # HandlerFunction
 Functions used to handle requests.
 
-### Parameters
-- `request` : [`Request`](#request) -> the incoming request
-- `response` : [`Response`](#response) -> the outgoing response
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `request` | [`Request`](#request) | The incoming request |
+| `response` | [`Response`](#response) | The outgoing response |
 
 ### Return value
 [`RequestStatus`](#requeststatus)
@@ -380,8 +408,9 @@ Functions used to handle requests.
 # Route
 Internal wrapper for [`HandlerFunction`](#handlerfunction) so they have common internally required properties with [`Router`](#router).
 
-### Values
-- `Route.path` : string -> the path of the route
-- `Route.method` : [`HTTPMethod`](#httpmethod) -> the method this route handles
-- `Route.type` : [`HandlerType.RouterFunction`](#handlertype) -> the type of the route
-- `Route._handle` : [`HandlerFunction`](#handlerfunction) -> the wrapped handler function
+| Value | Type | Description |
+| ----- | ---- | ----------- |
+| `Route.path` | string | the path of the route |
+| `Route.method` | [`HTTPMethod`](#httpmethod) | the method this route handles |
+| `Route.type` | [`HandlerType.RouterFunction`](#handlertype) | the type of the route |
+| `Route._handle` | [`HandlerFunction`](#handlerfunction) | the wrapped handler function |
