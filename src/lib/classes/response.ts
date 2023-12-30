@@ -1,12 +1,12 @@
-import { ServerResponse } from 'node:http';
-import { Headers, ContentType, CookieAttributes, Cookie } from '../types.js';
+import { OutgoingHttpHeaders, ServerResponse } from 'node:http';
+import { ContentType, CookieAttributes, Cookie } from '../types.js';
 import { getContentType, getCookieHeaderValue } from '../utils.js';
 
 export class Response {
 
     private _response: ServerResponse;
     checkContentType: boolean = true;
-    headers: Headers = {};
+    headers: OutgoingHttpHeaders = {};
     headSent: boolean = false;
     sent: boolean = false;
     contentType: ContentType | null = null;
@@ -88,3 +88,5 @@ export class Response {
         this.sent = true;
     }
 }
+
+let a: OutgoingHttpHeaders;

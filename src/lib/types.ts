@@ -22,10 +22,6 @@ export enum ContentType {
     OctetStream = 'application/octet-stream'
 }
 
-export type Headers = {
-    [key: string]: string
-}
-
 export type HandlerFunction = (request: Request, response: Response) => RequestStatus;
 
 export type Route = {
