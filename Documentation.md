@@ -323,7 +323,7 @@ Adds a function to be called just after the request is sent. Useful for logging 
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
-| `callback` | () => void | The function to be called |
+| `callback` | function | The function to be called |
 
 #### Examples
 ```js
