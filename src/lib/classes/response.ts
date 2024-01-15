@@ -5,10 +5,12 @@ import { getContentType, getCookieHeaderValue } from '../utils.js';
 export class Response {
 
     private _response: ServerResponse;
+    private _onSentCallbacks: (() => void)[] = [];
     checkContentType: boolean = true;
     headers: OutgoingHttpHeaders = {};
     headSent: boolean = false;
     sent: boolean = false;
+    sentTimestamp: number | null = null;
     contentType: ContentType | null = null;
     code: number = 200;
     cookies: {[key: string]: Cookie} = {};
@@ -39,6 +41,12 @@ export class Response {
 
     private _write(data: string | Buffer) {
         this._response.write(data);
+    }
+
+    private _runOnSentCallbacks() {
+        for (const callback of this._onSentCallbacks) {
+            callback();
+        }
     }
 
     setContentTypeCheck(value: boolean) {
@@ -85,7 +93,15 @@ export class Response {
             this.send(data);
         }
         this._response.end();
+        this.sentTimestamp = Date.now();
         this.sent = true;
+        if (this._onSentCallbacks.length) {
+            this._runOnSentCallbacks();
+        }
+    }
+
+    onSent(callback: () => void) {
+        this._onSentCallbacks.push(callback);
     }
 }
 
