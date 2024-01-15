@@ -104,5 +104,3 @@ export class Response {
         this._onSentCallbacks.push(callback);
     }
 }
-
-let a: OutgoingHttpHeaders;
