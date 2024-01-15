@@ -20,6 +20,9 @@ npm run build
 
 This will build the project in `dist/lib/`. The entry point of the library is `lib.js`.
 
+## Documentation
+For more details on the different apis, check the [documentation](Documentation.md).
+
 ## Usage examples
 ### Simple server :
 
