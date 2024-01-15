@@ -167,6 +167,7 @@ Adds a new handler for any request method.
 - [`<Request>.query`](#requestquery---urlsearchparams)
 - [`<Request>.data`](#requestdata)
 - [`<Request>.cookies`](#requestcookies----key-string-string)
+- [`<Request>.timestamp`](#requesttimestamp---number)
 
 ### \<Request>.body -> string | Buffer
 The body of the request. It is a string or a Buffer, depending on the Content-Type header.
@@ -223,6 +224,9 @@ server.get('/protected', (req, res) => {
 
 ### \<Request>.cookies -> { [key: string]: string }
 The cookies sent with the request.
+
+### \<Request>.timestamp -> number
+The timestamp at which the server received the request.
 
 # class Response
 
