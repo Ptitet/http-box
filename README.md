@@ -20,11 +20,14 @@ npm run build
 
 This will build the project in `dist/lib/`. The entry point of the library is `lib.js`.
 
+## Documentation
+For more details on the different apis, check the [documentation](Documentation.md).
+
 ## Usage examples
 ### Simple server :
 
 ```js
-import { HTTPServer, RequestStatus } from 'http-server'; // or the path to lib/lib.js
+import { HTTPServer, RequestStatus } from 'http-box'; // or the path to lib/lib.js
 const port = 3000;
 const server = new HTTPServer({ port }); // create the server
 
@@ -47,7 +50,7 @@ Here, a new server is created with the class `HTTPServer`. Then, with the `<HTTP
 ### Using routers :
 
 ```js
-import { HTTPServer, Router, RequestStatus } from 'http-server';
+import { HTTPServer, Router, RequestStatus } from 'http-box';
 const port = 3000;
 const server = new HTTPServer({ port });
 

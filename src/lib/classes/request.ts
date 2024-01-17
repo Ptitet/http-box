@@ -15,6 +15,7 @@ export class Request {
     query: URLSearchParams;
     data: any = {};
     cookies: { [key: string]: string };
+    timestamp: number = Date.now();
 
     constructor(request: IncomingMessage, httpServer: HTTPServer) {
         this._request = request;

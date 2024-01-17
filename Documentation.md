@@ -167,6 +167,7 @@ Adds a new handler for any request method.
 - [`<Request>.query`](#requestquery---urlsearchparams)
 - [`<Request>.data`](#requestdata)
 - [`<Request>.cookies`](#requestcookies----key-string-string)
+- [`<Request>.timestamp`](#requesttimestamp---number)
 
 ### \<Request>.body -> string | Buffer
 The body of the request. It is a string or a Buffer, depending on the Content-Type header.
@@ -224,6 +225,9 @@ server.get('/protected', (req, res) => {
 ### \<Request>.cookies -> { [key: string]: string }
 The cookies sent with the request.
 
+### \<Request>.timestamp -> number
+The timestamp at which the server received the request.
+
 # class Response
 
 ## Properties
@@ -234,6 +238,7 @@ The cookies sent with the request.
 - [`<Response>.contentType`](#responsecontenttype---contenttype)
 - [`<Response>.code`](#responsecode---number)
 - [`<Response>.cookies`](#responsecookies----name-string-cookie)
+- [`<Response>.sentTimestamp`](#responsesenttimestamp---number)
 
 ### \<Response>.checkContentType -> boolean
 Whether or not the content-type checking when sending data is enabled. Use [`<Response>.setContentTypeCheck()`](#responsesetcontenttypecheckvalue---void) to modify this value.
@@ -256,6 +261,9 @@ The status code of the response. By default it is `200`. Use [`<Response>.status
 ### \<Response>.cookies -> { [name: string]: Cookie }
 The cookies that have been set on this response. See [`<Response>.setCookie()`](#responsesetcookiename-value-attributes---void) for more details.
 
+### \<Response>.sentTimestamp -> ?number
+The timestamp when the `<Response>.end()` method has been called. This property is `null` before `<Response>.end()` has been called. View [`<Response>.end()`](#responseenddata---void) for more details.
+
 ## Methods
 - [`<Response>.setContentTypeCheck()`](#responsesetcontenttypecheckvalue---void)
 - [`<Response>.send()`](#responsesenddata---void)
@@ -263,6 +271,7 @@ The cookies that have been set on this response. See [`<Response>.setCookie()`](
 - [`<Response>.setCookie()`](#responsesetcookiename-value-attributes---void)
 - [`<Response>.status()`](#responsestatuscode---void)
 - [`<Response>.end()`](#responseenddata---void)
+- [`Reponse.onSent()`](#responseonsentcallback---void)
 
 ### \<Response>.setContentTypeCheck(value) -> void
 Enable or disable the content-type checking.
@@ -308,6 +317,23 @@ End the response. Optionally send data, then set [`<Response>.sent`](#responsese
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | `data` | ?(string \| Buffer) | The data to send before ending the response |
+
+### \<Response>.onSent(callback) -> void
+Adds a function to be called just after the request is sent. Useful for logging middlewares.
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `callback` | function | The function to be called |
+
+#### Examples
+```js
+server.use('/*', function logger(req, res) {
+    res.onSent(() => {
+        console.log(`timestamp: ${res.sentTimestamp} | code: ${res.code}`);
+    });
+    return RequestStatus.Next;
+});
+```
 
 # enum RequestStatus
 The possible status for a request in the handling process, returned by the [handler functions](#type-handlerfunction).
