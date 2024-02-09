@@ -106,7 +106,7 @@ function isBoolean(value: any): value is boolean {
 const cookieAttributesMatches: {[key: string]: string} = {
     secure: 'Secure',
     maxAge: 'Max-Age',
-    httpOnly: 'HttpOnly'
+    httpOnly: 'Http-Only'
 }
 
 export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
