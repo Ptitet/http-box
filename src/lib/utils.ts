@@ -112,7 +112,7 @@ const cookieAttributesMatches: {[key: string]: string} = {
 export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
     let headerValue = `${cookieName}=${cookie.value}`;
     for (let attributeName of Object.keys(cookie.attributes)) {
-        let attribute = cookie.attributes[attributeName] as boolean | string;
+        let attribute = cookie.attributes[attributeName];
         if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}`;
         else if (attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
     }
