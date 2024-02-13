@@ -4,19 +4,21 @@ HTTP-box is a lightweight http Node.js JavaScript library, inspired from [Expres
 You can use it to easily setup a modular http server.
 
 ## Installation
-### Regular installation
-You can install HTTP-box using npm :
+### Dependencies
+[Node.js](https://nodejs.org) and [TypeScript](https://www.npmjs.com/package/typescript) are required. You can install TypeScript using [npm](https://npmjs.com).
+
 ```sh
-npm install http-box
+npm i typescript
 ```
 
-### Build from source
-If you want to build HTTP-box yourself, follow these steps :
-- Clone this repository : `git clone https://github.com/Ptitet/http-box.git`
-- Go to the root directory : `cd http-box`
-- Install all the dependencies : `npm install`
-- Build the library : `npm run build`
-This library will be available in `dist/lib/`. The entry point of the library is `lib.js`.
+### Build
+Then you have to build the project :
+
+```sh
+npm run build
+```
+
+This will build the project in `dist/lib/`. The entry point of the library is `lib.js`.
 
 ## Documentation
 For more details on the different apis, check the [documentation](Documentation.md).
