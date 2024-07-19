@@ -67,7 +67,6 @@ await describe('test of the http server', async () => {
         const res = await fetch(`${rootUrl}/givemecookies`);
         const [name, ...value] = res.headers.getSetCookie()[0].split('=');
         const [cookieValue, ...attributes] = value.join('=').split('; ');
-        console.log(attributes);
         assert.strictEqual(name, 'cookie');
         assert.strictEqual(cookieValue, 'value');
         assert.ok(attributes.includes('Secure'));
