@@ -101,8 +101,8 @@ export function parseCookieHeader(cookieHeader: string) {
     return cookies;
 }
 
-function isBoolean(value: unknown): value is boolean {
-    return [true, false].includes(value as boolean);
+function isBoolean(value: unknown) {
+    return typeof value === 'boolean';
 }
 
 const cookieAttributesMap = new Map(Object.entries({
