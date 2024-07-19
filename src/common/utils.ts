@@ -90,7 +90,7 @@ export function populateRequestParams(currentPath: string, routePath: string): R
 }
 
 export function isRequestStatus(value: unknown): value is RequestStatus {
-    return Object.values(RequestStatus).includes(value as RequestStatus);
+    return isPartOfEnum(value, RequestStatus);
 }
 
 export function parseCookieHeader(cookieHeader: string) {
