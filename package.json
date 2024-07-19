@@ -18,7 +18,8 @@
   "bugs": "https://github.com/Ptitet/http-box/issues",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "npm run build && node --test"
   },
   "type": "module",
   "module": "dist/index.js",
