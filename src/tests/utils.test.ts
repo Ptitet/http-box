@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test'
-import * as utils from '../lib/utils.js';
+import * as utils from '../common/utils.js';
 import assert from 'node:assert';
-import { ContentType } from '../lib/types.js';
+import { ContentType } from '../common/types.js';
 
 describe('test of the utils functions', () => {
     describe('isJSON', () => {
