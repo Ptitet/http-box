@@ -3,29 +3,30 @@ HTTP-box is a lightweight http Node.js JavaScript library, inspired from [Expres
 
 You can use it to easily setup a modular http server.
 
-## Installation
-### Regular installation
+# Installation
+## Regular installation
 You can install HTTP-box using npm :
 ```sh
 npm install http-box
 ```
 
-### Build from source
+## Build from source
 If you want to build HTTP-box yourself, follow these steps :
 - Clone this repository : `git clone https://github.com/Ptitet/http-box.git`
 - Go to the root directory : `cd http-box`
 - Install all the dependencies : `npm install`
 - Build the library : `npm run build`
-This library will be available in the `dist/` folder. The entry point of the library is `index.js`.
 
-## Documentation
-For more details on the different apis, check the [documentation](Documentation.md).
+The library will be available in the `dist` folder. The entry point is `index.js`.
 
-## Usage examples
-### Simple server :
+# Documentation
+For more details on the different APIs, please check the [documentation](Documentation.md).
+
+# Usage examples
+## Simple server :
 
 ```js
-import { HTTPServer, RequestStatus } from 'http-box'; // or the path to lib/lib.js
+import { HTTPServer, RequestStatus } from 'http-box'; // or the path to dist/index.js
 const port = 3000;
 const server = new HTTPServer({ port }); // create the server
 
@@ -45,7 +46,7 @@ server.start(() => console.log(`Server open at http://localhost:${port}`));
 
 Here, a new server is created with the class `HTTPServer`. Then, with the `<HTTPServer>.get()` and `<HTTPServer>.post()` methods, two handlers are created, one at the root path `/` and an other at `/echo`. Finally, the server is started with `<HTTPServer>.start()`.
 
-### Using routers :
+## Using routers :
 
 ```js
 import { HTTPServer, Router, RequestStatus } from 'http-box';
