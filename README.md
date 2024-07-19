@@ -16,7 +16,7 @@ If you want to build HTTP-box yourself, follow these steps :
 - Go to the root directory : `cd http-box`
 - Install all the dependencies : `npm install`
 - Build the library : `npm run build`
-This library will be available in `dist/lib/`. The entry point of the library is `lib.js`.
+This library will be available in the `dist/` folder. The entry point of the library is `index.js`.
 
 ## Documentation
 For more details on the different apis, check the [documentation](Documentation.md).
