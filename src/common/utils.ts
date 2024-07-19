@@ -105,18 +105,18 @@ function isBoolean(value: unknown): value is boolean {
     return [true, false].includes(value as boolean);
 }
 
-const cookieAttributesMatches: Record<string, string> = {
+const cookieAttributesMap = new Map(Object.entries({
     secure: 'Secure',
     maxAge: 'Max-Age',
     httpOnly: 'Http-Only'
-};
+}));
 
 export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
     let headerValue = `${cookieName}=${cookie.value}`;
     for (const attributeName of Object.keys(cookie.attributes)) {
         const attribute = cookie.attributes[attributeName];
-        if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}`;
-        else if (attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
+        if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMap.get(attributeName)}`;
+        else if (attribute) headerValue += `; ${cookieAttributesMap.get(attributeName)}=${attribute}`;
     }
     return headerValue;
 }
