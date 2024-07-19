@@ -1,34 +1,36 @@
 {
   "name": "http-box",
-  "version": "1.1.1",
   "description": "Tiny, lightweight and modular http server with express-like routers and structure",
-  "main": "dist/lib/lib.js",
-  "files": [
-    "dist/lib",
-    "dist/tests"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Ptitet/http-box.git"
-  },
-  "homepage": "https://github.com/Ptitet/http-box",
-  "bugs": "https://github.com/Ptitet/http-box/issues",
-  "type": "module",
-  "types": "dist/lib/lib.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "pnpm run build && node --test"
-  },
+  "version": "1.1.1",
+  "author": "Ptitet",
+  "license": "ISC",
   "keywords": [
     "http",
     "server",
     "express",
     "lightweight"
   ],
-  "author": "Ptitet",
-  "license": "ISC",
+  "homepage": "https://github.com/Ptitet/http-box",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ptitet/http-box.git"
+  },
+  "bugs": "https://github.com/Ptitet/http-box/issues",
+  "scripts": {
+    "build": "tsc"
+  },
+  "type": "module",
+  "module": "dist/index.js",
   "devDependencies": {
-    "@types/node": "^20.11.5",
-    "typescript": "^5.3.3"
-  }
+    "@types/bun": "^1.1.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "types",
+    "package.json"
+  ],
+  "types": "types/index.d.ts"
 }
