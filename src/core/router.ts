@@ -5,22 +5,21 @@ import type { Request } from './request';
 import type { Route, HandlerFunction } from '../common/types';
 
 export class Router {
-
     routers: Router[] = [];
     routes: Route[] = [];
     type = HandlerType.Router;
-    path: string = '';
+    path = '';
     method: HTTPMethod = HTTPMethod.Any;
 
     protected _handle(currentPath: string, request: Request, response: Response): RequestStatus {
-        let routeFunctions = this.routes.filter(route => {
-            let doesPathsMatch = matchPaths(currentPath, route.path);
-            let doesMethodsMatch = route.method === request.method || route.method === HTTPMethod.Any;
+        const routeFunctions = this.routes.filter(route => {
+            const doesPathsMatch = matchPaths(currentPath, route.path);
+            const doesMethodsMatch = route.method === request.method || route.method === HTTPMethod.Any;
             return doesPathsMatch && doesMethodsMatch;
         });
 
         if (!routeFunctions.length) {
-            let nextRouter = this.routers.find(router => matchPaths(currentPath, router.path));
+            const nextRouter = this.routers.find(router => matchPaths(currentPath, router.path));
             if (!nextRouter) {
                 // 404
                 response.status(404);
@@ -31,15 +30,15 @@ export class Router {
                 return nextRouter._handle(currentPath, request, response);
             }
         } else {
-            for (let routeFunction of routeFunctions) {
+            for (const routeFunction of routeFunctions) {
                 request.params = populateRequestParams(currentPath, routeFunction.path);
-                let status = routeFunction._handle(request, response);
+                const status = routeFunction._handle(request, response);
                 if (!isRequestStatus(status)) throw new Error(`Handler function must return a RequestStatus, received ${typeof status}`);
                 if (status !== RequestStatus.Next) return status;
             }
-            let lastRouteFunctionDone = routeFunctions[routeFunctions.length - 1];
+            const lastRouteFunctionDone = routeFunctions[routeFunctions.length - 1];
             currentPath = cleanPath(lastRouteFunctionDone.path, currentPath);
-            let nextRouter = this.routers.find(router => matchPaths(currentPath, router.path));
+            const nextRouter = this.routers.find(router => matchPaths(currentPath, router.path));
             if (!nextRouter) {
                 // 404
                 response.status(404);
@@ -50,22 +49,22 @@ export class Router {
     }
 
     get(path: string, handler: HandlerFunction) {
-        let wrapped = wrapHandlerFunction(HTTPMethod.Get, path, handler);
+        const wrapped = wrapHandlerFunction(HTTPMethod.Get, path, handler);
         this.routes.push(wrapped);
     }
 
     post(path: string, handler: HandlerFunction) {
-        let wrapped = wrapHandlerFunction(HTTPMethod.Post, path, handler);
+        const wrapped = wrapHandlerFunction(HTTPMethod.Post, path, handler);
         this.routes.push(wrapped);
     }
 
     patch(path: string, handler: HandlerFunction) {
-        let wrapped = wrapHandlerFunction(HTTPMethod.Patch, path, handler);
+        const wrapped = wrapHandlerFunction(HTTPMethod.Patch, path, handler);
         this.routes.push(wrapped);
     }
 
     delete(path: string, handler: HandlerFunction) {
-        let wrapped = wrapHandlerFunction(HTTPMethod.Delete, path, handler);
+        const wrapped = wrapHandlerFunction(HTTPMethod.Delete, path, handler);
         this.routes.push(wrapped);
     }
 
@@ -74,7 +73,7 @@ export class Router {
             handler.path = path;
             this.routers.push(handler);
         } else {
-            let wrapped = wrapHandlerFunction(HTTPMethod.Any, path, handler);
+            const wrapped = wrapHandlerFunction(HTTPMethod.Any, path, handler);
             this.routes.push(wrapped);
         }
     }

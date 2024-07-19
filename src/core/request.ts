@@ -4,24 +4,23 @@ import type { HTTPServer } from './server';
 import type { HTTPMethod } from '../common/types';
 
 export class Request {
-
     private _request: IncomingMessage;
-    private _bodyBuild: boolean = false;
+    private _bodyBuild = false;
     body: string | Buffer = Buffer.from([]);
     headers: IncomingHttpHeaders;
     method: HTTPMethod;
     url: URL;
-    params: { [key: string]: string; } = {};
+    params: Record<string, string> = {};
     query: URLSearchParams;
-    data: any = {};
-    cookies: { [key: string]: string };
+    data: Record<string, unknown> = {};
+    cookies: Record<string, string>;
     timestamp: number = Date.now();
 
     constructor(request: IncomingMessage, httpServer: HTTPServer) {
         this._request = request;
         this.headers = request.headers;
-        this.method = parseRequestMethod(request.method as string);
-        this.url = new URL(request.url as string, `http://localhost:${httpServer.port}`); // ? use localhost as hostname or something else ?
+        this.method = parseRequestMethod(request.method!);
+        this.url = new URL(request.url!, `http://localhost:${httpServer.port}`); // ? use localhost as hostname or something else ?
         this.query = this.url.searchParams;
         if (request.headers.cookie) this.cookies = parseCookieHeader(request.headers.cookie);
         else this.cookies = {};
@@ -35,7 +34,7 @@ export class Request {
 
     private _parseBody() {
         if (this.headers['content-type'] === 'application/json') {
-            this.body = JSON.parse(this.body.toString());
+            this.body = JSON.parse(this.body.toString()) as string;
         }
     }
 

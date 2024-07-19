@@ -4,6 +4,7 @@ import type { Cookie, HandlerFunction, Route } from './types';
 export function isJSON(data: string): boolean {
     let parsed;
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         parsed = JSON.parse(data);
     } catch {
         return false;
@@ -39,19 +40,19 @@ export function wrapHandlerFunction(method: HTTPMethod, path: string, handlerFun
         _handle: handlerFunction,
         type: HandlerType.RouterFunction,
         method
-    }
+    };
 }
 
 function matchPart(handlerPart: string, requestPart?: string): boolean {
-    let isHandlerPartAny = handlerPart === '*';
-    let isHandlerPartParameter = !!handlerPart.match(/:\w+/);
-    let doesPartMatches = handlerPart.toLowerCase() === requestPart?.toLowerCase();
+    const isHandlerPartAny = handlerPart === '*';
+    const isHandlerPartParameter = !!handlerPart.match(/:\w+/);
+    const doesPartMatches = handlerPart.toLowerCase() === requestPart?.toLowerCase();
     return isHandlerPartAny || isHandlerPartParameter || doesPartMatches;
 }
 
 export function matchPaths(currentPath: string, handlerPath: string): boolean {
-    let splitRequestPath = currentPath.split('/');
-    let splitHandlerPath = handlerPath.split('/');
+    const splitRequestPath = currentPath.split('/');
+    const splitHandlerPath = handlerPath.split('/');
     splitRequestPath.shift();
     splitHandlerPath.shift();
     for (let i = 0; i < splitHandlerPath.length; i++) {
@@ -61,59 +62,59 @@ export function matchPaths(currentPath: string, handlerPath: string): boolean {
 }
 
 export function cleanPath(routePath: string, currentPath: string): string {
-    let splitRoutePath = routePath.split('/');
-    let splitCurrentPath = currentPath.split('/');
+    const splitRoutePath = routePath.split('/');
+    const splitCurrentPath = currentPath.split('/');
     splitRoutePath.shift();
     splitCurrentPath.shift();
-    let cleanedPath = splitCurrentPath.slice(splitRoutePath.length);
+    const cleanedPath = splitCurrentPath.slice(splitRoutePath.length);
     cleanedPath.unshift('');
     return cleanedPath.join('/') || '/';
 }
 
-export function populateRequestParams(currentPath: string, routePath: string): { [key: string]: string } {
-    let splitRoutePath = routePath.split('/');
-    let splitCurrentPath = currentPath.split('/');
+export function populateRequestParams(currentPath: string, routePath: string): Record<string, string> {
+    const splitRoutePath = routePath.split('/');
+    const splitCurrentPath = currentPath.split('/');
     splitRoutePath.unshift();
     splitCurrentPath.unshift();
-    let params: { [key: string]: string } = {};
+    const params: Record<string, string> = {};
     for (let i = 0; i < splitRoutePath.length; i++) {
         if (splitRoutePath[i].match(/:\w+/)) {
-            let paramName = splitRoutePath[i].slice(1);
-            let paramValue = splitCurrentPath[i];
+            const paramName = splitRoutePath[i].slice(1);
+            const paramValue = splitCurrentPath[i];
             params[paramName] = paramValue;
         }
     }
     return params;
 }
 
-export function isRequestStatus(value: any): value is RequestStatus {
-    return Object.values(RequestStatus).includes(value);
+export function isRequestStatus(value: unknown): value is RequestStatus {
+    return Object.values(RequestStatus).includes(value as RequestStatus);
 }
 
 export function parseCookieHeader(cookieHeader: string) {
-    let cookiePairs = cookieHeader.split('; ');
-    let cookies: { [key: string]: string } = {};
-    for (let cookie of cookiePairs) {
-        let [name, value] = cookie.split('=');
+    const cookiePairs = cookieHeader.split('; ');
+    const cookies: Record<string, string> = {};
+    for (const cookie of cookiePairs) {
+        const [name, value] = cookie.split('=');
         cookies[name] = value;
     }
     return cookies;
 }
 
-function isBoolean(value: any): value is boolean {
-    return [true, false].includes(value);
+function isBoolean(value: unknown): value is boolean {
+    return [true, false].includes(value as boolean);
 }
 
-const cookieAttributesMatches: { [key: string]: string } = {
+const cookieAttributesMatches: Record<string, string> = {
     secure: 'Secure',
     maxAge: 'Max-Age',
     httpOnly: 'Http-Only'
-}
+};
 
 export function getCookieHeaderValue(cookieName: string, cookie: Cookie): string {
     let headerValue = `${cookieName}=${cookie.value}`;
-    for (let attributeName of Object.keys(cookie.attributes)) {
-        let attribute = cookie.attributes[attributeName];
+    for (const attributeName of Object.keys(cookie.attributes)) {
+        const attribute = cookie.attributes[attributeName];
         if (isBoolean(attribute) && attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}`;
         else if (attribute) headerValue += `; ${cookieAttributesMatches[attributeName]}=${attribute}`;
     }

@@ -1,5 +1,5 @@
 import assert from 'node:assert';
-import { HTTPServer, HTTPServerEvent, RequestStatus, Router } from '../lib/lib.js';
+import { HTTPServer, HTTPServerEvent, RequestStatus, Router } from '../index.js';
 import { describe, before, it, after } from 'node:test';
 
 /* TODO
@@ -8,14 +8,13 @@ import { describe, before, it, after } from 'node:test';
 */
 
 await describe('test of the http server', async () => {
-
     const port = 3000;
     const rootUrl = `http://localhost:${port}`;
     let server: HTTPServer;
 
     before(() => {
         server = new HTTPServer({ port });
-        const router = new Router;
+        const router = new Router();
 
         router.get('/', (req, res) => {
             res.send('router /');
@@ -40,7 +39,9 @@ await describe('test of the http server', async () => {
             return RequestStatus.Done;
         });
 
-        server.start(() => console.log('Test server launched !'));
+        server.start(() => {
+            console.log('Test server launched !');
+        });
 
         server.on(HTTPServerEvent.Error, e => {
             throw e;
@@ -48,24 +49,24 @@ await describe('test of the http server', async () => {
     });
 
     await it('echo the request body', async () => {
-        let body = JSON.stringify({ some: 'test', object: { with: [1, 'bit', 'of'], data: true } });
-        let res = await fetch(`${rootUrl}/echo`, { body, method: 'POST' });
-        let resBody = await res.text();
+        const body = JSON.stringify({ some: 'test', object: { with: [1, 'bit', 'of'], data: true } });
+        const res = await fetch(`${rootUrl}/echo`, { body, method: 'POST' });
+        const resBody = await res.text();
         assert.strictEqual(resBody, body);
     });
 
     await it('handling of :params', async () => {
-        let paramValue1 = '1234';
-        let paramValue2 = 'abcd';
-        let res = await fetch(`${rootUrl}/router/params/${paramValue1}/${paramValue2}`, { method: 'GET' });
-        let resBody = await res.text();
+        const paramValue1 = '1234';
+        const paramValue2 = 'abcd';
+        const res = await fetch(`${rootUrl}/router/params/${paramValue1}/${paramValue2}`, { method: 'GET' });
+        const resBody = await res.text();
         assert.strictEqual(paramValue1 + paramValue2, resBody);
     });
 
     await it('cookies', async () => {
-        let res = await fetch(`${rootUrl}/givemecookies`);
-        let [name, ...value] = res.headers.getSetCookie()[0].split('=');
-        let [cookieValue, ...attributes] = value.join('=').split('; ');
+        const res = await fetch(`${rootUrl}/givemecookies`);
+        const [name, ...value] = res.headers.getSetCookie()[0].split('=');
+        const [cookieValue, ...attributes] = value.join('=').split('; ');
         console.log(attributes);
         assert.strictEqual(name, 'cookie');
         assert.strictEqual(cookieValue, 'value');
@@ -75,5 +76,5 @@ await describe('test of the http server', async () => {
 
     after(() => {
         server.close();
-    })
+    });
 });

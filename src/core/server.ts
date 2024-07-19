@@ -6,32 +6,33 @@ import { removeTrailingSlash } from '../common/utils.js';
 import { type HTTPServerOptions, HTTPServerEvent } from '../common/types.js';
 
 export class HTTPServer extends Router {
-
     private _httpServer: Server;
     port: number;
 
     constructor(options?: HTTPServerOptions) {
         super();
-        this._httpServer = options?.httpServer || new Server;
-        this.port = options?.port || 80;
+        this._httpServer = options?.httpServer ?? new Server();
+        this.port = options?.port ?? 80;
 
         this._setup();
     }
 
     private _setup() {
-        this._httpServer.on(HTTPServerEvent.Request, async (req, res) => {
-            let request = new Request(req, this);
-            await request.buildBody();
-            let response = new Response(res);
-            let path = removeTrailingSlash(request.url.pathname);
-            this._handle(path, request, response);
-            if (!response.sent) {
-                response.end();
-            }
+        this._httpServer.on(HTTPServerEvent.Request, (req, res) => {
+            const request = new Request(req, this);
+            const requestBodyBuilt = request.buildBody();
+            const response = new Response(res);
+            const path = removeTrailingSlash(request.url.pathname);
+            void requestBodyBuilt.then(() => {
+                this._handle(path, request, response);
+                if (!response.sent) {
+                    response.end();
+                }
+            });
         });
     }
 
-    on(event: HTTPServerEvent, callback: (...args: any[]) => void) {
+    on(event: HTTPServerEvent, callback: (...args: unknown[]) => void) {
         this._httpServer.on(event, callback);
     }
 

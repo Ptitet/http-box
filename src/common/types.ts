@@ -24,11 +24,11 @@ export enum ContentType {
 
 export type HandlerFunction = (request: Request, response: Response) => RequestStatus;
 
-export type Route = {
-    path: string,
-    method: HTTPMethod,
-    type: HandlerType.RouterFunction,
-    _handle: HandlerFunction
+export interface Route {
+    path: string;
+    method: HTTPMethod;
+    type: HandlerType.RouterFunction;
+    _handle: HandlerFunction;
 }
 
 export enum HandlerType {
@@ -36,9 +36,9 @@ export enum HandlerType {
     RouterFunction
 }
 
-export type HTTPServerOptions = {
-    httpServer?: Server,
-    port?: number
+export interface HTTPServerOptions {
+    httpServer?: Server;
+    port?: number;
 }
 
 export enum HTTPServerEvent {
@@ -55,14 +55,14 @@ export enum HTTPServerEvent {
     Upgrade = 'upgrade'
 }
 
-export type CookieAttributes = {
-    [key: string]: number | boolean | undefined,
-    secure?: boolean,
-    maxAge?: number,
-    httpOnly?: boolean
+export interface CookieAttributes {
+    [key: string]: number | boolean | undefined;
+    secure?: boolean;
+    maxAge?: number;
+    httpOnly?: boolean;
 }
 
-export type Cookie = {
-    value: string,
-    attributes: CookieAttributes
+export interface Cookie {
+    value: string;
+    attributes: CookieAttributes;
 }

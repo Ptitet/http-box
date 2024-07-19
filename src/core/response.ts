@@ -4,17 +4,16 @@ import type { ContentType } from '../common/types';
 import type { CookieAttributes, Cookie } from '../common/types';
 
 export class Response {
-
     private _response: ServerResponse;
     private _onSentCallbacks: (() => void)[] = [];
-    checkContentType: boolean = true;
+    checkContentType = true;
     headers: OutgoingHttpHeaders = {};
-    headSent: boolean = false;
-    sent: boolean = false;
+    headSent = false;
+    sent = false;
     sentTimestamp: number | null = null;
     contentType: ContentType | null = null;
-    code: number = 200;
-    cookies: { [key: string]: Cookie } = {};
+    code = 200;
+    cookies: Record<string, Cookie> = {};
 
     constructor(response: ServerResponse) {
         this._response = response;
@@ -26,9 +25,9 @@ export class Response {
     }
 
     private _prepareCookies() {
-        let headers: string[] = [];
-        for (let cookieName of Object.keys(this.cookies)) {
-            let cookieHeaderValue = getCookieHeaderValue(cookieName, this.cookies[cookieName]);
+        const headers: string[] = [];
+        for (const cookieName of Object.keys(this.cookies)) {
+            const cookieHeaderValue = getCookieHeaderValue(cookieName, this.cookies[cookieName]);
             headers.push(cookieHeaderValue);
         }
         this._response.setHeader('Set-Cookie', headers);
@@ -61,7 +60,7 @@ export class Response {
             this._writeHead();
         }
         if (this.checkContentType) {
-            let dataType = getContentType(data);
+            const dataType = getContentType(data);
             if (dataType !== this.contentType) throw new Error(`Invalid data type : ${dataType} is not ${this.contentType}`);
         }
         this._write(data);
@@ -76,10 +75,10 @@ export class Response {
     setCookie(name: string, value: string, attributes: CookieAttributes = {}) {
         if (this.sent) throw new Error('Response already sent');
         if (this.headSent) throw new Error('Response head already sent');
-        let cookie: Cookie = {
+        const cookie: Cookie = {
             value,
             attributes
-        }
+        };
         this.cookies[name] = cookie;
     }
 
