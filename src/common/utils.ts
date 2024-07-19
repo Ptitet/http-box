@@ -18,13 +18,15 @@ export function removeTrailingSlash(path: string) {
     return path;
 }
 
+function isPartOfEnum<Enum extends object>(value: unknown, enumObject: Enum): value is Enum {
+    return Object.values(enumObject).includes(value as Enum);
+}
+
 export function parseRequestMethod(requestMethod: string): HTTPMethod {
-    switch (requestMethod) {
-        case 'GET': return HTTPMethod.Get;
-        case 'POST': return HTTPMethod.Post;
-        case 'PATCH': return HTTPMethod.Patch;
-        case 'DELETE': return HTTPMethod.Delete;
-        default: return HTTPMethod.Any;
+    if (!isPartOfEnum(requestMethod, HTTPMethod)) {
+        return HTTPMethod.Any;
+    } else {
+        return HTTPMethod[requestMethod as keyof typeof HTTPMethod];
     }
 }
 
